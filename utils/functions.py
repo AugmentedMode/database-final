@@ -7,7 +7,7 @@ def get_database_connection():
         Creates a connection between selected database
     '''
     import sqlite3
-    sqlite_file = 'user.db'
+    sqlite_file = 'database.db'
     file_exists = os.path.isfile(sqlite_file)
     conn = sqlite3.connect(sqlite_file)
     if not file_exists:
@@ -64,7 +64,7 @@ def store_last_login(user_id):
     conn = get_database_connection()
     try:
         cursor = conn.cursor()
-        cursor.execute("UPDATE users SET last_login=(strftime('%Y-%m-%d %H:%M:%S', 'now', 'localtime')) WHERE id=?", (user_id, ))
+        cursor.execute("UPDATE users SET last_login=(strftime('%Y-%m-%d %H:%M:%S', 'now', 'localtime')) WHERE user_id=?", (user_id, ))
         conn.commit()
         cursor.close()
     except:
@@ -117,7 +117,7 @@ def edit_password(password, user_id):
     password = generate_password_hash(password)
     try:
         cursor = conn.cursor()
-        cursor.execute("UPDATE users SET password=? WHERE id=?", (password, user_id))
+        cursor.execute("UPDATE users SET password=? WHERE user_id=?", (password, user_id))
         conn.commit()
         cursor.close()
         return
