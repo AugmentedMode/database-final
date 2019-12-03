@@ -116,7 +116,7 @@ def change_password():
     if form.validate_on_submit():
         password = request.form['password']
         functions.edit_password(password, session['id'])
-        return redirect('/profile/settings/')
+        return redirect('/homepage')
     return render_template('change_password.html', form=form, username=session['username'])
 
 if __name__ == '__main__':

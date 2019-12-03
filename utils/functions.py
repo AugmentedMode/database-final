@@ -107,3 +107,19 @@ def generate_password_hash(password):
     '''
     hashed_value = hashlib.md5(password.encode())
     return hashed_value.hexdigest()
+
+
+def edit_password(password, user_id):
+    '''
+        Function for adding note into the database
+    '''
+    conn = get_database_connection()
+    password = generate_password_hash(password)
+    try:
+        cursor = conn.cursor()
+        cursor.execute("UPDATE users SET password=? WHERE id=?", (password, user_id))
+        conn.commit()
+        cursor.close()
+        return
+    except:
+        cursor.close()
