@@ -133,7 +133,11 @@ def change_password():
 def checkout():
     return 'hello'
 
-@app.route("/admin/")
+@app.route("/user_management/")
+@login_required
+def user_management():
+    return render_template('users.html', username=session['username'])
+
 def admin():
     return 'ADMIN'
 
