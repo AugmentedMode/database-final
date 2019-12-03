@@ -13,6 +13,13 @@ CREATE TABLE `users` (
   `state` VARCHAR(200)
 );
 
+CREATE TABLE `staff` (
+  `salary` float(8,2),
+  `job_title` VARCHAR(255),
+  `user_id` INTEGER,
+  FOREIGN KEY(user_id) REFERENCES users(user_id)
+);
+
 CREATE TABLE `books` (
   `isbn` INTEGER NOT NULL PRIMARY KEY,
   `book_name` VARCHAR(255),
