@@ -93,11 +93,16 @@ def check_user_type(user_id):
     try:
         cursor = conn.cursor()
         cursor.execute('SELECT user_id FROM staff WHERE user_id=?', (int(user_id), ))
-        if cursor.fetchone() != None:
+
+        if cursor.fetchone() is not None:
             return True
+
         else:
             return False
-    except:
+
+    except Exception as e:
+        print('whyyyyy')
+        print(e)
         return False
 
 

@@ -35,6 +35,12 @@
                                 <a href="/"> HOME </a>
                             </li>
                         {% endif %}
+                        {% if session['admin'] %}
+                        <li>
+                            <a href="/admin">Admin only</a>
+                        </li>
+                        {% endif %}
+
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         {% if username %}

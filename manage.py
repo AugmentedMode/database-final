@@ -53,6 +53,11 @@ def login():
         if user_id:
             session['username'] = username
             session['id'] = user_id
+            check_admin = functions.check_user_type(user_id)
+            if check_admin:
+                session['admin'] = True
+            else:
+                session['admin'] = False
             functions.store_last_login(session['id'])
             return redirect('/homepage')
         else:
@@ -93,6 +98,7 @@ def logout():
     '''
     session['username'] = None
     session['id'] = None
+    session['admin'] = None
     return login()
 
 
@@ -125,12 +131,11 @@ def change_password():
 
 @app.route("/checkout/")
 def checkout():
-    user_id = session['id']
-    check_admin = functions.check_user_type(user_id)
-    if check_admin:
-        return 'I am an Admin'
-    else:
-        return 'I am not an admin'
+    return 'hello'
+
+@app.route("/admin/")
+def admin():
+    return 'ADMIN'
 
 if __name__ == '__main__':
     app.run(debug=True)
