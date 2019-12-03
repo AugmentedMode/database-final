@@ -119,5 +119,9 @@ def change_password():
         return redirect('/homepage')
     return render_template('change_password.html', form=form, username=session['username'])
 
+@app.route("/checkout/")
+def checkout():
+    return 'hello'
+
 if __name__ == '__main__':
     app.run(debug=True)

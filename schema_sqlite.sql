@@ -9,6 +9,21 @@ CREATE TABLE `users` (
   `email` VARCHAR(200)
 );
 
+CREATE TABLE `books` (
+  `isbn` INTEGER NOT NULL PRIMARY KEY,
+  `book_name` VARCHAR(255),
+  `book_price` NUMERIC,
+  `author` VARCHAR(255),
+  `genre` VARCHAR(255)
+);
+
+
+CREATE TABLE `copies` (
+  `copy_id` INTEGER NOT NULL PRIMARY KEY,
+  `availability` INTEGER,
+  `isbn` INTEGER,
+  FOREIGN KEY(isbn) REFERENCES books(isbn)
+);
 
 CREATE TABLE `transactions` (
   `transaction_id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
@@ -18,24 +33,8 @@ CREATE TABLE `transactions` (
   `user_id` INTEGER,
   FOREIGN KEY(copy_id) REFERENCES copies(copy_id)
   FOREIGN KEY(user_id) REFERENCES users(user_id)
-
 );
 
-CREATE TABLE `copies` (
-  `copy_id` INTEGER NOT NULL PRIMARY KEY,
-  `availability` INTEGER,
-  `isbn` INTEGER
-  FOREIGN KEY(isbn) REFERENCES books(isbn)
-);
-
-
-CREATE TABLE `books` (
-  `isbn` INTEGER NOT NULL PRIMARY KEY,
-  `book_name` VARCHAR(255),
-  `book_price` NUMERIC,
-  `author` VARCHAR(255),
-  `genre` VARCHAR(255)
-);
 
 -- ################## TRIGGERS ################## --
 
