@@ -30,7 +30,7 @@ CREATE TABLE `books` (
 
 
 CREATE TABLE `copies` (
-  `copy_id` INTEGER NOT NULL PRIMARY KEY,
+  `copy_id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
   `availability` INTEGER,
   `isbn` INTEGER,
   FOREIGN KEY(isbn) REFERENCES books(isbn)
