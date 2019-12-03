@@ -70,11 +70,15 @@ def signup():
         username = request.form['username']
         password = functions.generate_password_hash(request.form['password'])
         email = request.form['email']
+        phone_number = request.form['phone_number']
+        street = request.form['street']
+        city = request.form['city']
+        state = request.form['state']
         check = functions.check_username(username)
         if check:
             flash('Username already taken!')
         else:
-            functions.signup_user(username, password, email)
+            functions.signup_user(username, password, email, phone_number, street, city, state)
             session['username'] = username
             user_id = functions.check_user_exists(username, password)
             session['id'] = user_id

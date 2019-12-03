@@ -40,6 +40,13 @@ CREATE TABLE `transactions` (
   FOREIGN KEY(user_id) REFERENCES users(user_id)
 );
 
+CREATE TABLE `users_transactions` (
+  `user_id` INTEGER,
+  `transaction_id` INTEGER,
+  FOREIGN KEY(user_id) REFERENCES users(user_id)
+  FOREIGN KEY(transaction_id) REFERENCES transactions(transaction_id)
+);
+
 
 -- ################## TRIGGERS ################## --
 

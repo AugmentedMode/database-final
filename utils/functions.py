@@ -85,7 +85,7 @@ def check_username(username):
         return False
 
 
-def signup_user(username, password, email):
+def signup_user(username, password, email, phone_number, street, city, state):
     '''
         Function for storing the details of a user into the database
         while registering
@@ -93,7 +93,7 @@ def signup_user(username, password, email):
     conn = get_database_connection()
     try:
         cursor = conn.cursor()
-        cursor.execute("INSERT INTO users(username, password, email) VALUES (?, ?, ?)", (username, password, email))
+        cursor.execute("INSERT INTO users(username, password, email, phone_number, street, city, state) VALUES (?, ?, ?, ?, ?, ?, ?)", (username, password, email, phone_number, street, city, state))
         conn.commit()
         cursor.close()
         return
