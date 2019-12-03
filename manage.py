@@ -125,7 +125,12 @@ def change_password():
 
 @app.route("/checkout/")
 def checkout():
-    return 'hello'
+    user_id = session['id']
+    check_admin = functions.check_user_type(user_id)
+    if check_admin:
+        return 'I am an Admin'
+    else:
+        return 'I am not an admin'
 
 if __name__ == '__main__':
     app.run(debug=True)

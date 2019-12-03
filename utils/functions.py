@@ -85,6 +85,22 @@ def check_username(username):
         return False
 
 
+def check_user_type(user_id):
+    '''
+        Checks whether a username is already taken or not
+    '''
+    conn = get_database_connection()
+    try:
+        cursor = conn.cursor()
+        cursor.execute('SELECT user_id FROM staff WHERE user_id=?', (int(user_id), ))
+        if cursor.fetchone() != None:
+            return True
+        else:
+            return False
+    except:
+        return False
+
+
 def signup_user(username, password, email, phone_number, street, city, state):
     '''
         Function for storing the details of a user into the database
