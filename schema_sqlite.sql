@@ -6,7 +6,11 @@ CREATE TABLE `users` (
   `last_login` TIMESTAMP NOT NULL DEFAULT (strftime('%Y-%m-%d %H:%M:%S', 'now', 'localtime')),
   `username` VARCHAR(255),
   `password` VARCHAR(200),
-  `email` VARCHAR(200)
+  `email` VARCHAR(200),
+  `phone_number` VARCHAR(200),
+  `street` VARCHAR(200),
+  `city` VARCHAR(200),
+  `state` VARCHAR(200)
 );
 
 CREATE TABLE `books` (
@@ -29,6 +33,7 @@ CREATE TABLE `transactions` (
   `transaction_id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
   `start_date` TIMESTAMP NOT NULL DEFAULT (strftime('%Y-%m-%d %H:%M:%S', 'now', 'localtime')),
   `fees_due` INTEGER,
+  `returned` INTEGER,
   `copy_id` INTEGER,
   `user_id` INTEGER,
   FOREIGN KEY(copy_id) REFERENCES copies(copy_id)
