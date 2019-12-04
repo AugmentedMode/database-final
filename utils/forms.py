@@ -65,6 +65,6 @@ class AddTransactionForm(FlaskForm):
 class returnBooksForm(FlaskForm):
     username = TextField("Customer's Username*")
     isbn = TextField('Enter ISBN*')
-    fee = TextField('Enter Fee if needed*')
+    #fee = TextField('Enter Fee if needed*')
 
     submit = SubmitField('Add transaction!')

@@ -6,7 +6,7 @@
 
   <form method="POST" action='/return_books/'>
     {{ form.csrf_token }}
-    <h2> Checkout Book for User </h2>
+    <h2> Return Book for User </h2>
     {{ form.username.label }}
     <br>
     {{ form.username(class='form-control no_borders') }}
@@ -14,10 +14,6 @@
     {{ form.isbn.label }}
     <br>
     {{ form.isbn(class='form-control no_borders') }}
-    <br>
-    {{ form.fee.label }}
-    <br>
-    {{ form.fee(class='form-control no_borders') }}
     <br>
     {{ form.submit(class='form-control btn btn-primary no_borders') }}
   </form>
