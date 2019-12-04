@@ -218,3 +218,40 @@ def delete_user(id):
     except Exception as e:
         print(e)
         cursor.close()
+
+
+def add_transaction(username, isbn):
+    '''
+        Adds transaction to the database
+    '''
+    conn = get_database_connection()
+    try:
+        cursor = conn.cursor()
+        cursor.execute("SELECT user_id FROM users where users.username=username")
+        user_id = cursor.fetchone()[0]
+        cursor.execute("SELECT copy_id FROM copies where copies.isbn=isbn")
+        copy_id = cursor.fetchone()[0]
+
+        cursor.execute("INSERT INTO transactions(user_id, copy_id) VALUES (?, ?)", (user_id, copy_id))
+        cursor.execute("UPDATE copies SET availability=? WHERE copy_id=?", (0, copy_id))
+
+        conn.commit()
+        cursor.close()
+        return
+    except:
+        cursor.close()
+
+
+def return_book(username, isbn):
+    '''
+        Return book in the database
+    '''
+    conn = get_database_connection()
+    try:
+        cursor = conn.cursor()
+        cursor.execute("UPDATE copies SET availability=? WHERE copy_id=?", (1, copy_id))
+        conn.commit()
+        cursor.close()
+        return
+    except:
+        cursor.close()

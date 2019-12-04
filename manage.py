@@ -7,7 +7,8 @@ from flask import (
 
 from utils.forms import (
     LoginForm, SignUpForm,
-    ChangeEmailForm, ChangePasswordForm, AddBooksForm
+    ChangeEmailForm, ChangePasswordForm,
+    AddBooksForm, AddTransactionForm, returnBooksForm
 )
 
 from flask_restful import Resource, Api, reqparse
@@ -129,9 +130,16 @@ def change_password():
         return redirect('/homepage')
     return render_template('change_password.html', form=form, username=session['username'])
 
-@app.route("/checkout/")
+@app.route("/checkout/",  methods=['GET', 'POST'])
+@login_required
 def checkout():
-    return 'hello'
+    form = AddTransactionForm()
+    if form.validate_on_submit():
+        username = request.form['username']
+        isbn = request.form['isbn']
+        functions.add_transaction(username, isbn)
+        return redirect('/homepage')
+    return render_template('checkout_book.html', form=form, username=session['username'])
 
 @app.route("/user_management/",  methods=['GET', 'POST'])
 @login_required
@@ -160,6 +168,19 @@ def add_books():
         return redirect('/homepage')
 
     return render_template('add_books.html', form=form, username=session['username'])
+
+@app.route('/return_books/', methods=['GET', 'POST'])
+@login_required
+def return_books():
+    form = returnBooksForm()
+    if form.validate_on_submit():
+        username = request.form['username']
+        isbn = request.form['isbn']
+        functions.return_book(username, isbn)
+        return redirect('/homepage')
+
+    return render_template('return_books.html', form=form, username=session['username'])
+
 
 if __name__ == '__main__':
     app.run(debug=True)

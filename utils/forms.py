@@ -54,3 +54,17 @@ class AddBooksForm(FlaskForm):
     author = TextField('Author*')
     genre = TextField('Genre*')
     submit = SubmitField('Add book!')
+
+
+class AddTransactionForm(FlaskForm):
+    username = TextField("Customer's Username*")
+    isbn = TextField('Enter ISBN*')
+    submit = SubmitField('Add transaction!')
+
+
+class returnBooksForm(FlaskForm):
+    username = TextField("Customer's Username*")
+    isbn = TextField('Enter ISBN*')
+    fee = TextField('Enter Fee if needed*')
+
+    submit = SubmitField('Add transaction!')

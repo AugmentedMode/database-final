@@ -17,7 +17,7 @@
         font-family: Calibre-Semibold;
         src: url(static/fonts/Calibre-Semibold.ttf);
       }
-      
+
       </style>
     </head>
     <body>
@@ -38,15 +38,19 @@
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav" id="navbar-links">
                         {% if username %}
-                            <li>
-                                <a href="/checkout" style="color:white;">Check Out Book</a>
-                            </li>
+
                         {% else %}
                             <li>
                                 <a href="/" style="color:white;"> HOME </a>
                             </li>
                         {% endif %}
                         {% if session['admin'] %}
+                        <li>
+                            <a href="/checkout" style="color:white;">Check Out Book</a>
+                        </li>
+                        <li>
+                            <a href="/return_books" style="color:white;">Return Book</a>
+                        </li>
                         <li>
                             <a href="/user_management" style="color:white;">Users</a>
                         </li>
