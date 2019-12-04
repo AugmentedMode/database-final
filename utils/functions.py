@@ -144,3 +144,28 @@ def edit_password(password, user_id):
         return
     except:
         cursor.close()
+
+def all_users():
+    '''
+        Returns all users in the database
+    '''
+    conn = get_database_connection()
+    try:
+        cursor = conn.cursor()
+        cursor.execute("SELECT user_id, username, email, phone_number, street, city, state, \
+        (user_id IN (SELECT user_id FROM users NATURAL JOIN staff)) AS is_admin \
+        FROM users;")
+
+        '''row = cursor.fetchone()
+        while row is not None:
+            print(row)
+            row = cursor.fetchone()
+        '''
+        
+        results = cursor.fetchall()
+
+        conn.commit()
+        cursor.close()
+        return results
+    except:
+        cursor.close()
