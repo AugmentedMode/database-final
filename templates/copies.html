@@ -12,6 +12,7 @@
                 <th scope="col">Price</th>
                 <th scope="col">Author</th>
                 <th scope="col">Genre</th>
+                <th scope="col">ID</th>
                 <th scope="col">Availability</th>
             </tr>
         </thead>
@@ -19,10 +20,11 @@
             {% for row in value %}
             <tr>
                 <td>{{row[0]}}</td>
-                <td>{{row[1]}}</td>
+                <td>${{row[1]}}</td>
                 <td>{{row[2]}}</td>
                 <td>{{row[3]}}</td>
                 <td>{{row[4]}}</td>
+                <td>{{row[5]}}</td>
             </tr>
             {% endfor %}
         </tbody>
@@ -30,4 +32,21 @@
     
 </div>
 
+<style>
+    th{
+        padding: 2em;
+        text-align: center;
+        border: solid .3em;
+    }
+
+    table{
+        margin: 0 auto;
+    }
+
+    td{
+        padding: 2em;
+        text-align: center;
+        border: solid .1em;
+    }
+</style>
 {% endblock %}

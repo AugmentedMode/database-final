@@ -161,13 +161,21 @@ def add_books():
 
     return render_template('add_books.html', form=form, username=session['username'])
 
+
+@app.route("/copies/", methods=['GET', 'POST'])
+@login_required
+def copies():
+    
+    conn = functions.get_database_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT book_name, book_price, author, genre, copy_id, availability FROM books NATURAL JOIN copies")
+    data = cursor.fetchall()
+    conn.commit()
+    cursor.close()
+    
+    return render_template("copies.html", value = data)
+
+
 if __name__ == '__main__':
     app.run(debug=True)
 
-@app.route("/copies/", methods=['GET', 'POST'])
-def copies():
-    conn = functions.get_database_connection()
-    cursor = conn.cursor()
-    cursor.excecute("SELECT book_name, book_price, author, genre, copy_id, availability FROM books NATURAL JOIN copies")
-    data = cursor.fetchall()
-    return render_template("copies.html", value = data)

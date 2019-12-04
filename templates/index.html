@@ -38,8 +38,9 @@
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav" id="navbar-links">
                         {% if username %}
+                      
                             <li>
-                                <a href="/checkout" style="color:white;">Check Out Book</a>
+                                <a href="/copies" style="color:white;">Books</a>
                             </li>
                         {% else %}
                             <li>
@@ -48,12 +49,14 @@
                         {% endif %}
                         {% if session['admin'] %}
                         <li>
+                                <a href="/checkout" style="color:white;">Check Out Book</a>
+                            </li>
+                        <li>
                             <a href="/user_management" style="color:white;">Users</a>
                         </li>
                         <li>
                             <a href="/add_books" style="color:white;">Add To Inventory</a>
                         </li>
-
                         {% endif %}
 
                     </ul>
