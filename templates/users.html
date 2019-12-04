@@ -5,38 +5,98 @@
 <div class="container">
     <h1>Users</h1>
     <div class="container">
-        <table class="table">
+        
+
+        <table class="table" , id="users">
             <thead>
-              <tr>
-                <th scope="col">User ID</th>
-                <th scope="col">Role</th>
-                <th scope="col">Username</th>
-                <th scope="col">Email</th>
-                <th scope="col">Phone number</th>
-                <th scope="col">Street</th>
-                <th scope="col">City</th>
-                <th scope="col">State</th>
-              </tr>
+                <tr>
+                    <th scope="col">User ID</th>
+                    <th scope="col">Role</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Phone number</th>
+                    <th scope="col">Street</th>
+                    <th scope="col">City</th>
+                    <th scope="col">State</th>
+                </tr>
             </thead>
             <tbody>
                 {% for user in users %}
-                    <tr>
-                        <th scope = "row">{{user[0]}}</th>
-                        {% if user[7] == 1 %}
-                            <td>Admin</td>
-                        {% else %}
-                            <td>User</td>
-                        {% endif %}
-                        <td>{{user[1]}}</td>
-                        <td>{{user[2]}}</td>
-                        <td>{{user[3]}}</td>
-                        <td>{{user[4]}}</td>
-                        <td>{{user[5]}}</td>
-                        <td>{{user[6]}}</td>
-                    </tr>
+                <tr>
+                    <th scope="row">{{user[0]}}</th>
+                    {% if user[7] == 1 %}
+                    <td>Admin</td>
+                    {% else %}
+                    <td>User</td>
+                    {% endif %}
+                    <td>{{user[1]}}</td>
+                    <td>{{user[2]}}</td>
+                    <td>{{user[3]}}</td>
+                    <td>{{user[4]}}</td>
+                    <td>{{user[5]}}</td>
+                    <td>{{user[6]}}</td>
+                    {% if session['id'] != user[0] %}
+                        <td>
+                            <a href="#" data-toggle="modal" data-target='#edit{{ user[0] }}' class="btn btn-primary"><i
+                                    class="fa fa-edit"></i> Edit </a>
+                        </td>
+                        <td>
+                            <a href="#" data-toggle="modal" data-target='#delete{{ user[0] }}' class="btn btn-danger"><i
+                                    class="fa fa-delete"></i> Delete </a>
+                        </td>
+                    {% else %}
+                        <td>
+                            <a href="#" data-toggle="modal" data-target='#edit{{ user[0] }}' class="btn btn-primary disabled"><i
+                                class="fa fa-edit" aria-disabled="true"></i> Edit </a>
+                        </td>
+                        <td>
+                            <a href="#" data-toggle="modal" data-target='#delete{{ user[0] }}' class="btn btn-danger disabled"><i
+                                class="fa fa-delete" aria-disabled="true"></i> Delete </a>
+                        </td>
+                    {% endif %}
+                </tr>
+                <div class="modal fade" id="edit{{ user[0] }}" tabindex="-1" role="dialog" aria-labelledby="Edit"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">Edit User</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>Some text in the modal.</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade" id="delete{{ user[0] }}" tabindex="-1" role="dialog" aria-labelledby="Delete"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">Delete User</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>Are you sure you want to delete {{user[1]}}?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <form action="#" method="POST" role="form">
+                                    <input type="hidden" name="id" value="{{ user[0] }}">
+                                    <button type="submit" class="btn btn-danger">Confirm deletion</button>
+                                </form>
+                                <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 {% endfor %}
+
             </tbody>
-          </table>
+        </table>
     </div>
 </div>
 
