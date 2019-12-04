@@ -220,7 +220,6 @@ def update_user_role(id):
         cursor.close()
     except Exception as e:
         print(e)
-<<<<<<< HEAD
         cursor.close()
 
 
@@ -268,6 +267,4 @@ def return_book(username, isbn, fee=0):
         return
     except:
         cursor.close()
-=======
         cursor.close()
->>>>>>> master
