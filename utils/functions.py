@@ -157,5 +157,22 @@ def add_to_inventory(isbn, book_name, book_price, author, genre):
         conn.commit()
         cursor.close()
         return
+
+def all_users():
+    '''
+        Returns all users in the database
+    '''
+    conn = get_database_connection()
+    try:
+        cursor = conn.cursor()
+        cursor.execute("SELECT user_id, username, email, phone_number, street, city, state, \
+        (user_id IN (SELECT user_id FROM users NATURAL JOIN staff)) AS is_admin \
+        FROM users;")
+
+        results = cursor.fetchall()
+
+        conn.commit()
+        cursor.close()
+        return results
     except:
         cursor.close()
