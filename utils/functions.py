@@ -101,7 +101,6 @@ def check_user_type(user_id):
             return False
 
     except Exception as e:
-        print('whyyyyy')
         print(e)
         return False
 
@@ -132,7 +131,7 @@ def generate_password_hash(password):
 
 def edit_password(password, user_id):
     '''
-        Function for adding note into the database
+        Function for editing password
     '''
     conn = get_database_connection()
     password = generate_password_hash(password)
@@ -143,4 +142,79 @@ def edit_password(password, user_id):
         cursor.close()
         return
     except:
+        cursor.close()
+
+
+def add_to_inventory(isbn, book_name, book_price, author, genre):
+    '''
+        Adds books and its copies to the database
+    '''
+    conn = get_database_connection()
+    try:
+        cursor = conn.cursor()
+        cursor.execute("INSERT INTO books(isbn, book_name, book_price, author, genre) VALUES (?, ?, ?, ?, ?)", (isbn, book_name, book_price, author, genre))
+        cursor.execute("INSERT INTO copies(availability, isbn) VALUES (?, ?)", (1, isbn))
+
+        conn.commit()
+        cursor.close()
+        return
+    except:
+        cursor.close()
+
+def all_users():
+    '''
+        Returns all users in the database
+    '''
+    conn = get_database_connection()
+    try:
+        cursor = conn.cursor()
+        cursor.execute("SELECT user_id, username, email, phone_number, street, city, state, \
+        (user_id IN (SELECT user_id FROM users NATURAL JOIN staff)) AS is_admin \
+        FROM users;")
+
+        results = cursor.fetchall()
+
+        conn.commit()
+        cursor.close()
+        return results
+    except:
+        cursor.close()
+
+def last_admin(id):
+    '''
+        Returns whether the user in question is the only admin
+        We wouldn't want to delete the last admin, now would we?
+    '''
+    conn = get_database_connection()
+    try:
+        cursor = conn.cursor()
+        cursor.execute("SELECT count(*) FROM staff")
+
+        num_admins = int(cursor.fetchone()[0])
+
+        cursor.execute("SELECT count(user_id) FROM staff WHERE user_id = '" + id + "';")
+        num_of_user = int(cursor.fetchone()[0])
+
+        conn.commit()
+        cursor.close()
+        if num_admins == 1 and num_of_user == 1:
+            return True
+        else:
+            return False
+    except Exception as e:
+        print(e)
+        cursor.close()
+
+def delete_user(id):
+    '''
+        Deletes a specified user
+    '''
+    conn = get_database_connection()
+    try:
+        cursor = conn.cursor()
+        cursor.execute("DELETE FROM users WHERE user_id = " + id)
+        conn.commit()
+        cursor.close()
+    except Exception as e:
+        print(e)
         cursor.close()

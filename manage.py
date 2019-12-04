@@ -7,13 +7,13 @@ from flask import (
 
 from utils.forms import (
     LoginForm, SignUpForm,
-    ChangeEmailForm, ChangePasswordForm
+    ChangeEmailForm, ChangePasswordForm, AddBooksForm
 )
 
 from flask_restful import Resource, Api, reqparse
 from utils.decorators import login_required
 from flask_pagedown import PageDown
-from flask import Markup
+from flask import Markup, request
 import utils.functions as functions
 import datetime
 import markdown
@@ -78,7 +78,7 @@ def signup():
         phone_number = request.form['phone_number']
         street = request.form['street']
         city = request.form['city']
-        state = request.form['state']
+        state = request.form['state'].upper()
         check = functions.check_username(username)
         if check:
             flash('Username already taken!')
@@ -133,9 +133,33 @@ def change_password():
 def checkout():
     return 'hello'
 
-@app.route("/admin/")
+@app.route("/user_management/",  methods=['GET', 'POST'])
+@login_required
+def user_management():
+    if request.method == 'POST':
+        id = request.form['id']
+        if not functions.last_admin(id):
+            functions.delete_user(id)
+    users_dict = functions.all_users()
+    return render_template('users.html', username=session['username'], users = users_dict)
+
 def admin():
     return 'ADMIN'
+
+@app.route('/add_books/', methods=['GET', 'POST'])
+@login_required
+def add_books():
+    form = AddBooksForm()
+    if form.validate_on_submit():
+        isbn = request.form['isbn']
+        book_name = request.form['book_name']
+        book_price = request.form['book_price']
+        author = request.form['author']
+        genre = request.form['genre']
+        functions.add_to_inventory(isbn, book_name, book_price, author, genre)
+        return redirect('/homepage')
+
+    return render_template('add_books.html', form=form, username=session['username'])
 
 if __name__ == '__main__':
     app.run(debug=True)
