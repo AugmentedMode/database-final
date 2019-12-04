@@ -2,8 +2,42 @@
 
 {% block content %}
 
-<div class="container-fluid">
+<div class="container">
     <h1>Users</h1>
+    <div class="container">
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">User ID</th>
+                <th scope="col">Role</th>
+                <th scope="col">Username</th>
+                <th scope="col">Email</th>
+                <th scope="col">Phone number</th>
+                <th scope="col">Street</th>
+                <th scope="col">City</th>
+                <th scope="col">State</th>
+              </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                    <tr>
+                        <th scope = "row">{{user[0]}}</th>
+                        {% if user[7] == 1 %}
+                            <td>Admin</td>
+                        {% else %}
+                            <td>User</td>
+                        {% endif %}
+                        <td>{{user[1]}}</td>
+                        <td>{{user[2]}}</td>
+                        <td>{{user[3]}}</td>
+                        <td>{{user[4]}}</td>
+                        <td>{{user[5]}}</td>
+                        <td>{{user[6]}}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+          </table>
+    </div>
 </div>
 
 {% endblock %}

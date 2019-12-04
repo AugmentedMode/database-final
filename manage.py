@@ -136,7 +136,8 @@ def checkout():
 @app.route("/user_management/")
 @login_required
 def user_management():
-    return render_template('users.html', username=session['username'])
+    users_dict = functions.all_users()
+    return render_template('users.html', username=session['username'], users = users_dict)
 
 def admin():
     return 'ADMIN'
