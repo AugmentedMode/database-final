@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import TextField, PasswordField, SubmitField, SelectMultipleField, HiddenField
+from wtforms import TextField, PasswordField, SubmitField, SelectMultipleField, HiddenField, IntegerField
 from flask_pagedown.fields import PageDownField
 from wtforms import validators
 
@@ -45,3 +45,12 @@ class ChangePasswordForm(FlaskForm):
     confirm_password = PasswordField('Confirm Password*', [validators.Required("Confirm \
       your password")])
     submit = SubmitField('Update Password')
+
+
+class AddBooksForm(FlaskForm):
+    isbn = TextField('ISBN*')
+    book_name = TextField('Book Name*')
+    book_price = TextField('Book Price*')
+    author = TextField('Author*')
+    genre = TextField('Genre*')
+    submit = SubmitField('Add book!')

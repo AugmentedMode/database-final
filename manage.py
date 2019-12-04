@@ -7,7 +7,7 @@ from flask import (
 
 from utils.forms import (
     LoginForm, SignUpForm,
-    ChangeEmailForm, ChangePasswordForm
+    ChangeEmailForm, ChangePasswordForm, AddBooksForm
 )
 
 from flask_restful import Resource, Api, reqparse
@@ -141,6 +141,22 @@ def user_management():
 
 def admin():
     return 'ADMIN'
+
+@app.route('/add_books/', methods=['GET', 'POST'])
+@login_required
+def add_books():
+    form = AddBooksForm()
+    print('VERY BEFORE')
+    if form.validate_on_submit():
+        isbn = request.form['isbn']
+        book_name = request.form['book_name']
+        book_price = request.form['book_price']
+        author = request.form['author']
+        genre = request.form['genre']
+        functions.add_to_inventory(isbn, book_name, book_price, author, genre)
+        return redirect('/homepage')
+
+    return render_template('add_books.html', form=form, username=session['username'])
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -145,6 +145,19 @@ def edit_password(password, user_id):
     except:
         cursor.close()
 
+
+def add_to_inventory(isbn, book_name, book_price, author, genre):
+    print('HELLOOOOO')
+    conn = get_database_connection()
+    try:
+        cursor = conn.cursor()
+        cursor.execute("INSERT INTO books(isbn, book_name, book_price, author, genre) VALUES (?, ?, ?, ?, ?)", (isbn, book_name, book_price, author, genre))
+        cursor.execute("INSERT INTO copies(availability, isbn) VALUES (?, ?)", (1, isbn))
+
+        conn.commit()
+        cursor.close()
+        return
+
 def all_users():
     '''
         Returns all users in the database
@@ -156,12 +169,6 @@ def all_users():
         (user_id IN (SELECT user_id FROM users NATURAL JOIN staff)) AS is_admin \
         FROM users;")
 
-        '''row = cursor.fetchone()
-        while row is not None:
-            print(row)
-            row = cursor.fetchone()
-        '''
-        
         results = cursor.fetchall()
 
         conn.commit()
