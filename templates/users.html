@@ -64,11 +64,31 @@
                                     <h4 class="modal-title">Edit User</h4>
                                 </div>
                                 <div class="modal-body">
-                                    <p>Some text in the modal.</p>
+                                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 col-md-offset-3 col-lg-offset-3">
+                                        {% for message in form.username.errors %}
+                                            <div class="alert alert-danger">{{ message }}</div>
+                                        {% endfor %}
+                            
+                                        {% for message in form.password.errors %}
+                                            <div class="alert alert-danger">{{ message }}</div>
+                                        {% endfor %}
+                            
+                                        {% for message in get_flashed_messages() %}
+                                        <div class="alert alert-danger">
+                                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                            {{ message }}
+                                        </div>
+                                        {% endfor %}
+                            
+                                        <form method="POST" action="#">
+                                            <br>
+                                            {{ form.submit(class='form-control btn btn-primary no_borders') }}
+                                        </form>
+                                    </div>
                                 </div>
-                                <div class="modal-footer">
+                                <!--<div class="modal-footer">
                                     <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
-                                </div>
+                                </div>-->
                             </div>
                         </div>
                     </div>
@@ -86,9 +106,10 @@
                                 <div class="modal-footer">
                                     <form action="#" method="POST" role="form">
                                         <input type="hidden" name="id" value="{{ user[0] }}">
+                                        <input type="hidden" name="type" value="delete">
                                         <button type="submit" class="btn btn-danger">Confirm deletion</button>
                                     </form>
-                                    <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+                                    <!--<button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>-->
                                 </div>
                             </div>
                         </div>

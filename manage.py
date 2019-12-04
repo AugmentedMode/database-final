@@ -7,7 +7,7 @@ from flask import (
 
 from utils.forms import (
     LoginForm, SignUpForm,
-    ChangeEmailForm, ChangePasswordForm, AddBooksForm
+    ChangeEmailForm, ChangePasswordForm, AddBooksForm, EditUserForm
 )
 
 from flask_restful import Resource, Api, reqparse
@@ -136,12 +136,16 @@ def checkout():
 @app.route("/user_management/",  methods=['GET', 'POST'])
 @login_required
 def user_management():
+    form = EditUserForm()
     if request.method == 'POST':
-        id = request.form['id']
-        if not functions.last_admin(id):
-            functions.delete_user(id)
+        if request.form['type'] == 'delete':
+            id = request.form['id']
+            if not functions.last_admin(id):
+                functions.delete_user(id)
+        else:
+            print("edit user!")
     users_dict = functions.all_users()
-    return render_template('users.html', username=session['username'], users = users_dict)
+    return render_template('users.html', form=form, username=session['username'], users = users_dict)
 
 def admin():
     return 'ADMIN'
