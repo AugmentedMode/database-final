@@ -1,0 +1,23 @@
+{% extends "index.html" %}
+
+{% block content %}
+
+<div class="container" style="padding-top: 2%">
+
+  <form method="POST" action='/return_books/'>
+    {{ form.csrf_token }}
+    <h2> Return Book for User </h2>
+    {{ form.username.label }}
+    <br>
+    {{ form.username(class='form-control no_borders') }}
+    <br>
+    {{ form.isbn.label }}
+    <br>
+    {{ form.isbn(class='form-control no_borders') }}
+    <br>
+    {{ form.submit(class='form-control btn btn-primary no_borders') }}
+  </form>
+
+</div>
+
+{% endblock %}
