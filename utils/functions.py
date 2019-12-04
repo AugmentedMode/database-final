@@ -131,7 +131,7 @@ def generate_password_hash(password):
 
 def edit_password(password, user_id):
     '''
-        Function for adding note into the database
+        Function for editing password
     '''
     conn = get_database_connection()
     password = generate_password_hash(password)
@@ -146,6 +146,9 @@ def edit_password(password, user_id):
 
 
 def add_to_inventory(isbn, book_name, book_price, author, genre):
+    '''
+        Adds books and its copies to the database
+    '''
     conn = get_database_connection()
     try:
         cursor = conn.cursor()
@@ -169,12 +172,6 @@ def all_users():
         (user_id IN (SELECT user_id FROM users NATURAL JOIN staff)) AS is_admin \
         FROM users;")
 
-        '''row = cursor.fetchone()
-        while row is not None:
-            print(row)
-            row = cursor.fetchone()
-        '''
-        
         results = cursor.fetchall()
 
         conn.commit()

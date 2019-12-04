@@ -1,0 +1,33 @@
+{% extends "index.html" %}
+
+{% block content %}
+
+<div class="container" style="padding-top: 2%">
+  <form method="POST" action='/add_books/'>
+    {{ form.csrf_token }}
+    {{ form.isbn.label }}
+    <br>
+    {{ form.isbn(class='form-control no_borders') }}
+    <br>
+    {{ form.book_name.label }}
+    <br>
+    {{ form.book_name(class='form-control no_borders') }}
+    <br>
+    {{ form.book_price.label }}
+    <br>
+    {{ form.book_price(class='form-control no_borders') }}
+    <br>
+    {{ form.author.label }}
+    <br>
+    {{ form.author(class='form-control no_borders') }}
+    <br>
+    {{ form.genre.label }}
+    <br>
+    {{ form.genre(class='form-control no_borders') }}
+    <br>
+    {{ form.submit(class='form-control btn btn-primary no_borders') }}
+  </form>
+
+</div>
+
+{% endblock %}
