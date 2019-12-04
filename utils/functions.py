@@ -144,8 +144,6 @@ def edit_password(password, user_id):
     except:
         cursor.close()
 
-<<<<<<< Updated upstream
-=======
 
 def add_to_inventory(isbn, book_name, book_price, author, genre):
     conn = get_database_connection()
@@ -160,7 +158,6 @@ def add_to_inventory(isbn, book_name, book_price, author, genre):
     except:
         cursor.close()
 
->>>>>>> Stashed changes
 def all_users():
     '''
         Returns all users in the database
