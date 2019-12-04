@@ -56,6 +56,7 @@ class AddBooksForm(FlaskForm):
     submit = SubmitField('Add book!')
 
 
+
 class AddTransactionForm(FlaskForm):
     username = TextField("Customer's Username*")
     isbn = TextField('Enter ISBN*')
@@ -68,3 +69,22 @@ class returnBooksForm(FlaskForm):
     #fee = TextField('Enter Fee if needed*')
 
     submit = SubmitField('Add transaction!')
+class EditUserForm(FlaskForm):
+  username = TextField('Username*', [validators.Required("Please enter \
+      your username")])
+  #role dropdown, check with jacob
+  email = TextField('Email*', [validators.Required("Please enter \
+    your email"), validators.Email('Email format incorrect')])
+  password = PasswordField('Password*', [validators.Required("Please enter \
+    your password"), validators.EqualTo('confirm_password', message='Passwords must match')])
+  confirm_password = PasswordField('Confirm Password*', [validators.Required("Confirm \
+    your password")])
+  phone_number = TextField('Phone Number*', [validators.Required("Please enter \
+    your Phone Number")])
+  street = TextField('Address*', [validators.Required("Please enter \
+      your Address")])
+  city = TextField('City*', [validators.Required("Please enter \
+    your City")])
+  state = TextField('State*', [validators.Required("Please enter \
+    your State")])
+  submit = SubmitField('Save changes')

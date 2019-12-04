@@ -14,8 +14,6 @@ CREATE TABLE `users` (
 );
 
 CREATE TABLE `staff` (
-  `salary` float(8,2),
-  `job_title` VARCHAR(255),
   `user_id` INTEGER,
   FOREIGN KEY(user_id) REFERENCES users(user_id)
 );
