@@ -61,3 +61,10 @@ CREATE TRIGGER `triggerUserLogin` AFTER UPDATE ON `users`
 BEGIN
    update `users` SET `last_login` = (strftime('%Y-%m-%d %H:%M:%S', 'now', 'localtime')) WHERE id = NEW.id;
 END;
+
+CREATE TRIGGER `userDelete_staff` AFTER DELETE ON `users`
+FOR EACH ROW
+BEGIN
+DELETE FROM staff
+    WHERE staff.user_id = old.user_id;
+END;

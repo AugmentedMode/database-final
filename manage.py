@@ -13,7 +13,7 @@ from utils.forms import (
 from flask_restful import Resource, Api, reqparse
 from utils.decorators import login_required
 from flask_pagedown import PageDown
-from flask import Markup
+from flask import Markup, request
 import utils.functions as functions
 import datetime
 import markdown
@@ -133,9 +133,13 @@ def change_password():
 def checkout():
     return 'hello'
 
-@app.route("/user_management/")
+@app.route("/user_management/",  methods=['GET', 'POST'])
 @login_required
 def user_management():
+    if request.method == 'POST':
+        id = request.form['id']
+        if not functions.last_admin(id):
+            functions.delete_user(id)
     users_dict = functions.all_users()
     return render_template('users.html', username=session['username'], users = users_dict)
 
