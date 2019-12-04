@@ -144,3 +144,18 @@ def edit_password(password, user_id):
         return
     except:
         cursor.close()
+
+
+def add_to_inventory(isbn, book_name, book_price, author, genre):
+    print('HELLOOOOO')
+    conn = get_database_connection()
+    try:
+        cursor = conn.cursor()
+        cursor.execute("INSERT INTO books(isbn, book_name, book_price, author, genre) VALUES (?, ?, ?, ?, ?)", (isbn, book_name, book_price, author, genre))
+        cursor.execute("INSERT INTO copies(availability, isbn) VALUES (?, ?)", (1, isbn))
+
+        conn.commit()
+        cursor.close()
+        return
+    except:
+        cursor.close()
