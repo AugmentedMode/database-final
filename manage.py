@@ -78,7 +78,7 @@ def signup():
         phone_number = request.form['phone_number']
         street = request.form['street']
         city = request.form['city']
-        state = request.form['state']
+        state = request.form['state'].upper()
         check = functions.check_username(username)
         if check:
             flash('Username already taken!')
@@ -150,7 +150,6 @@ def admin():
 @login_required
 def add_books():
     form = AddBooksForm()
-    print('VERY BEFORE')
     if form.validate_on_submit():
         isbn = request.form['isbn']
         book_name = request.form['book_name']
