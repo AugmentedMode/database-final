@@ -157,6 +157,8 @@ def add_to_inventory(isbn, book_name, book_price, author, genre):
         conn.commit()
         cursor.close()
         return
+    except:
+        cursor.close()
 
 def all_users():
     '''
