@@ -180,31 +180,6 @@ def all_users():
     except:
         cursor.close()
 
-def last_admin(id):
-    '''
-        Returns whether the user in question is the only admin
-        We wouldn't want to delete the last admin, now would we?
-    '''
-    conn = get_database_connection()
-    try:
-        cursor = conn.cursor()
-        cursor.execute("SELECT count(*) FROM staff")
-
-        num_admins = int(cursor.fetchone()[0])
-
-        cursor.execute("SELECT count(user_id) FROM staff WHERE user_id = '" + id + "';")
-        num_of_user = int(cursor.fetchone()[0])
-
-        conn.commit()
-        cursor.close()
-        if num_admins == 1 and num_of_user == 1:
-            return True
-        else:
-            return False
-    except Exception as e:
-        print(e)
-        cursor.close()
-
 def delete_user(id):
     '''
         Deletes a specified user
@@ -214,6 +189,34 @@ def delete_user(id):
         cursor = conn.cursor()
         cursor.execute("DELETE FROM users WHERE user_id = " + id)
         conn.commit()
+        cursor.close()
+    except Exception as e:
+        print(e)
+        cursor.close()
+
+def update_user_role(id):
+    '''
+        Toggles admin role
+    '''
+    conn = get_database_connection()
+    try:
+        cursor = conn.cursor()
+        print("SELECT user_id FROM staff WHERE user_id = " + id)
+        cursor.execute("SELECT user_id FROM staff WHERE user_id = " + id)
+        conn.commit()
+        is_admin = False
+        if cursor.fetchone() is not None:
+            is_admin = True
+
+        print(is_admin)
+        query = ""
+
+        if is_admin:
+            cursor.execute("DELETE FROM staff WHERE user_id = " + id)
+            conn.commit()
+        else:
+            cursor.execute("INSERT INTO staff(user_id) VALUES(" + id + ")")
+            conn.commit()
         cursor.close()
     except Exception as e:
         print(e)

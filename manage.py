@@ -138,12 +138,11 @@ def checkout():
 def user_management():
     form = EditUserForm()
     if request.method == 'POST':
+        id = request.form['id']
         if request.form['type'] == 'delete':
-            id = request.form['id']
-            if not functions.last_admin(id):
-                functions.delete_user(id)
+            functions.delete_user(id)
         else:
-            print("edit user!")
+            functions.update_user_role(id)
     users_dict = functions.all_users()
     return render_template('users.html', form=form, username=session['username'], users = users_dict)
 

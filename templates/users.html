@@ -36,8 +36,8 @@
                             <td>{{user[6]}}</td>
                         {% if session['id'] != user[0] %}
                         <td>
-                            <a href="#" data-toggle="modal" data-target='#edit{{ user[0] }}' class="btn btn-primary"><i
-                                    class="fa fa-edit"></i> Edit </a>
+                            <a href="#" data-toggle="modal" data-target='#update{{ user[0] }}' class="btn btn-primary"><i
+                                    class="fa fa-update"></i> Change role </a>
                         </td>
                         <td>
                             <a href="#" data-toggle="modal" data-target='#delete{{ user[0] }}' class="btn btn-danger"><i
@@ -45,8 +45,8 @@
                         </td>
                         {% else %}
                         <td>
-                            <a href="#" data-toggle="modal" data-target='#edit{{ user[0] }}'
-                                class="btn btn-primary disabled"><i class="fa fa-edit" aria-disabled="true"></i> Edit </a>
+                            <a href="#" data-toggle="modal" data-target='#update{{ user[0] }}'
+                                class="btn btn-primary disabled"><i class="fa fa-update" aria-disabled="true"></i> Change role </a>
                         </td>
                         <td>
                             <a href="#" data-toggle="modal" data-target='#delete{{ user[0] }}'
@@ -55,61 +55,46 @@
                         </td>
                         {% endif %}
                     </tr>
-                    <div class="modal fade" id="edit{{ user[0] }}" tabindex="-1" role="dialog" aria-labelledby="Edit"
-                        aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title">Edit User</h4>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 col-md-offset-3 col-lg-offset-3">
-                                        {% for message in form.username.errors %}
-                                            <div class="alert alert-danger">{{ message }}</div>
-                                        {% endfor %}
-                            
-                                        {% for message in form.password.errors %}
-                                            <div class="alert alert-danger">{{ message }}</div>
-                                        {% endfor %}
-                            
-                                        {% for message in get_flashed_messages() %}
-                                        <div class="alert alert-danger">
-                                            <button type="button" class="close" data-dismiss="alert">&times;</button>
-                                            {{ message }}
+                    <div class="modal fade" id="update{{ user[0] }}" tabindex="-1" role="dialog" aria-labelledby="Update" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Change user role</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Are you sure?</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <div class="form-group">
+                                            <form action="#" method="POST" role="form">
+                                                <input type="hidden" name="id" value="{{ user[0] }}">
+                                                <input type="hidden" name="type" value="role">
+                                                <button type="submit" class="btn btn-danger">Confirm update</button>
+                                                <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+                                            </form>
                                         </div>
-                                        {% endfor %}
-                            
-                                        <form method="POST" action="#">
-                                            <br>
-                                            {{ form.submit(class='form-control btn btn-primary no_borders') }}
-                                        </form>
                                     </div>
                                 </div>
-                                <!--<div class="modal-footer">
-                                    <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
-                                </div>-->
                             </div>
                         </div>
-                    </div>
-                    <div class="modal fade" id="delete{{ user[0] }}" tabindex="-1" role="dialog" aria-labelledby="Delete"
-                        aria-hidden="true">
+                    <div class="modal fade" id="delete{{ user[0] }}" tabindex="-1" role="dialog" aria-labelledby="Delete" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
                                     <h4 class="modal-title">Delete User</h4>
                                 </div>
                                 <div class="modal-body">
                                     <p>Are you sure you want to delete {{user[1]}}?</p>
                                 </div>
                                 <div class="modal-footer">
-                                    <form action="#" method="POST" role="form">
-                                        <input type="hidden" name="id" value="{{ user[0] }}">
-                                        <input type="hidden" name="type" value="delete">
-                                        <button type="submit" class="btn btn-danger">Confirm deletion</button>
-                                    </form>
-                                    <!--<button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>-->
+                                    <div class="form-group">
+                                        <form action="#" method="POST" role="form">
+                                            <input type="hidden" name="id" value="{{ user[0] }}">
+                                            <input type="hidden" name="type" value="delete">
+                                            <button type="submit" class="btn btn-danger">Confirm deletion</button>
+                                            <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
