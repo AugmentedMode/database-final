@@ -300,7 +300,6 @@ def refresh_fees():
         FROM transactions NATURAL JOIN copies NATURAL JOIN books WHERE transactions.returned = 0")
 
         row = cursor.fetchone()
-        five_percent = (0.05 * row[3])
         while row is not None:
             row_datetime = datetime.strptime(row[1], "%Y-%m-%d %H:%M:%S")
             if datetime.now() - timedelta(days=5) > row_datetime <= datetime.now() and not row[2] > row[3]:
@@ -312,4 +311,21 @@ def refresh_fees():
         cursor.close()
     except Exception as e:
         print(e)
+        cursor.close()
+
+def show_inventory():
+    '''
+        Returns all copies in database
+    '''
+    conn = get_database_connection()
+    try:
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM copies INNER JOIN books ON copies.isbn = books.isbn")
+
+        results = cursor.fetchall()
+
+        conn.commit()
+        cursor.close()
+        return results
+    except:
         cursor.close()

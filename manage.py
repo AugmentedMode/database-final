@@ -195,5 +195,11 @@ def transactions():
     trans_dict = functions.all_transactions()
     return render_template('transactions.html', form=form, username=session['username'], transactions = trans_dict)
 
+@app.route("/inventory/",  methods=['GET', 'POST'])
+@login_required
+def inventory():
+    inv_dict = functions.show_inventory()
+    return render_template('inventory.html', username=session['username'], inventory = inv_dict)
+
 if __name__ == '__main__':
     app.run(debug=True)
