@@ -190,6 +190,8 @@ def return_books():
 @login_required
 def transactions():
     form = RefreshFeesForm()
+    if request.method == 'POST':
+        functions.refresh_fees()
     trans_dict = functions.all_transactions()
     return render_template('transactions.html', form=form, username=session['username'], transactions = trans_dict)
 

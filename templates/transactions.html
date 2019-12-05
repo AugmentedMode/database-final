@@ -5,7 +5,27 @@
 <div class="container">
     <h1>Transactions</h1>
     <div class="container">
-
+        <a href="#" data-toggle="modal" data-target='#refresh_fees' class="btn btn-danger"><iclass="fa fa-refresh_fees"></i> Refresh late fees </a>
+        <div class="modal fade" id="refresh_fees" tabindex="-1" role="dialog" aria-labelledby="refesh_fees" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Refresh late fees</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>This will increase late fees for all transactions by 5% of book price per late day. Are you sure?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="form-group">
+                            <form action="#" method="POST" role="form">
+                                <button type="submit" class="btn btn-danger">Confirm update</button>
+                                <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <table class="table" , id="transactions">
             <thead>
                 <tr>
