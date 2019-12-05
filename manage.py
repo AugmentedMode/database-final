@@ -170,7 +170,7 @@ def add_books():
         author = request.form['author']
         genre = request.form['genre']
         functions.add_to_inventory(isbn, book_name, book_price, author, genre)
-        return redirect('/homepage')
+        return redirect('/inventory')
 
     return render_template('add_books.html', form=form, username=session['username'])
 
