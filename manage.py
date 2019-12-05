@@ -137,9 +137,8 @@ def change_password():
 def checkout():
     form = AddTransactionForm()
     if form.validate_on_submit():
-        username = request.form['username']
         isbn = request.form['isbn']
-        functions.add_transaction(username, isbn)
+        functions.add_transaction(session['id'], isbn)
         return redirect('/homepage')
     return render_template('checkout_book.html', form=form, username=session['username'])
 
@@ -200,6 +199,12 @@ def transactions():
 def inventory():
     inv_dict = functions.show_inventory()
     return render_template('inventory.html', username=session['username'], inventory = inv_dict)
+
+@app.route("/my_copies/",  methods=['GET', 'POST'])
+@login_required
+def my_copies():
+    copies_dict = functions.show_user_copies(session['id'])
+    return render_template('copies.html', username=session['username'], copies = copies_dict)
 
 if __name__ == '__main__':
     app.run(debug=True)

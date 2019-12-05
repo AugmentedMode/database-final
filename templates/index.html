@@ -38,30 +38,32 @@
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav" id="navbar-links">
                         {% if username %}
-
+                        <li>
+                            <a href="/my_copies" style="color:white; font-size:14px">My copies</a>
+                        </li>
                         {% else %}
                             <li>
-                                <a href="/" style="color:white;"> HOME </a>
+                                <a href="/" style="color:white; font-size:14px"> HOME </a>
                             </li>
                         {% endif %}
                         {% if session['admin'] %}
                         <li>
-                            <a href="/checkout" style="color:white;">Check Out Book</a>
+                            <a href="/checkout" style="color:white; font-size:14px">Check Out Book</a>
                         </li>
                         <li>
-                            <a href="/return_books" style="color:white;">Return Book</a>
+                            <a href="/return_books" style="color:white; font-size:14px">Return Book</a>
                         </li>
                         <li>
-                            <a href="/user_management" style="color:white;">Users</a>
+                            <a href="/user_management" style="color:white; font-size:14px">Users</a>
                         </li>
                         <li>
-                            <a href="/add_books" style="color:white;">Add To Inventory</a>
+                            <a href="/add_books" style="color:white; font-size:14px">Add To Inventory</a>
                         </li>
                         <li>
-                            <a href="/inventory" style="color:white;">View Inventory</a>
+                            <a href="/inventory" style="color:white; font-size:14px">View Inventory</a>
                         </li>
                         <li>
-                            <a href="/transactions" style="color:white;">Transactions</a>
+                            <a href="/transactions" style="color:white; font-size:14px">Transactions</a>
                         </li>
 
                         {% endif %}
