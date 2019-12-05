@@ -234,10 +234,10 @@ def add_transaction(username, isbn):
         user_id = cursor.fetchone()[0]
         cursor.execute("SELECT copy_id FROM copies where copies.isbn=isbn")
         copy_id = cursor.fetchone()[0]
-
+        print(copy_id)
         cursor.execute("INSERT INTO transactions(user_id, copy_id, returned) VALUES (?, ?, ?)", (user_id, copy_id, 0))
-        cursor.execute("UPDATE copies SET availability=? WHERE copy_id=?", (0, copy_id))
-
+        cursor.execute("UPDATE copies SET availability=? WHERE copy_id=? AND isbn=?", (0, copy_id, isbn))
+        print('it worked')
         conn.commit()
         cursor.close()
         return
@@ -251,20 +251,25 @@ def return_book(username, isbn, fee=0):
     '''
     conn = get_database_connection()
     try:
-        fee = int(fee)
         cursor = conn.cursor()
-        cursor.execute("SELECT user_id FROM users where users.username=username")
-        user_id = cursor.fetchone()[0]
-        cursor.execute("SELECT copy_id FROM copies where copies.isbn=isbn")
+        print('work')
+        cursor.execute("SELECT copy_id FROM copies WHERE copies.isbn=isbn")
+        print('work 2ns')
+
+        print('not working')
         copy_id = cursor.fetchone()[0]
-        cursor.execute("UPDATE copies SET availability=? WHERE copy_id=?", (1, copy_id))
-        #cursor.execute("UPDATE transactions SET fees_due=? WHERE copy_id=? AND returned=0", (fee, copy_id))
-
+        print('very worked')
+        print(copy_id)
+        print('beginging worked')
+        cursor.execute("UPDATE copies SET availability=? WHERE copies.copy_id=?", (1, copy_id))
+        print('half worked')
         cursor.execute("UPDATE transactions SET returned=? WHERE copy_id=?", (1, copy_id))
-
+        print('return book worked')
         conn.commit()
         cursor.close()
         return
     except:
+        print('exception hjappeed')
+
         cursor.close()
-        cursor.close()
+        cursor.close
