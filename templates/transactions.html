@@ -13,7 +13,8 @@
                         <h4 class="modal-title">Refresh late fees</h4>
                     </div>
                     <div class="modal-body">
-                        <p>This will increase late fees for all transactions by 5% of book price per late day. Are you sure?</p>
+                        <p>This will increase late fees for all transactions by 5% of book price per refresh, up to the full cost of the book. Are you sure?</p>
+                        <p>Books are considered late once they are <b>5</b> days late.</p>
                     </div>
                     <div class="modal-footer">
                         <div class="form-group">
@@ -49,8 +50,8 @@
                             <td>{{transaction[3]}}</td>
                             <td>{{transaction[4]}}</td>
                             <td>{{transaction[5]}}</td>
-                            <td>{{transaction[6]}}</td>
-                            <td>{{transaction[7]}}</td>
+                            <td>${{transaction[6]}}</td>
+                            <td>${{transaction[7]}}</td>
                             <td>{{transaction[8]}}</td>
                     </tr>
                 {% endfor %}
