@@ -37,8 +37,8 @@ CREATE TABLE `copies` (
 CREATE TABLE `transactions` (
   `transaction_id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
   `start_date` TIMESTAMP NOT NULL DEFAULT (strftime('%Y-%m-%d %H:%M:%S', 'now', 'localtime')),
-  `fees_due` INTEGER,
-  `returned` INTEGER,
+  `fees_due` INTEGER DEFAULT 0,
+  `returned` INTEGER DEFAULT 0,
   `copy_id` INTEGER,
   `user_id` INTEGER,
   FOREIGN KEY(copy_id) REFERENCES copies(copy_id)

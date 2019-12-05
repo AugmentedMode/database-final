@@ -209,9 +209,6 @@ def update_user_role(id):
         if cursor.fetchone() is not None:
             is_admin = True
 
-        print(is_admin)
-        query = ""
-
         if is_admin:
             cursor.execute("DELETE FROM staff WHERE user_id = " + id)
             conn.commit()
@@ -223,25 +220,25 @@ def update_user_role(id):
         print(e)
         cursor.close()
 
-def add_transaction(username, isbn):
+def add_transaction(id, isbn):
     '''
         Adds transaction to the database
     '''
     conn = get_database_connection()
     try:
         cursor = conn.cursor()
-        cursor.execute("SELECT user_id FROM users where users.username=username")
-        user_id = cursor.fetchone()[0]
-        cursor.execute("SELECT copy_id FROM copies where copies.isbn=isbn")
+        cursor.execute("SELECT copy_id FROM copies where copies.isbn='" + str(isbn) + "'")
         copy_id = cursor.fetchone()[0]
 
-        cursor.execute("INSERT INTO transactions(user_id, copy_id, returned) VALUES (?, ?, ?)", (user_id, copy_id, 0))
-        cursor.execute("UPDATE copies SET availability=? WHERE copy_id=?", (0, copy_id))
-
+        cursor.execute("INSERT INTO transactions(user_id, copy_id, returned) VALUES (?, ?, ?)", (id, copy_id, 0))
         conn.commit()
+        cursor.execute("UPDATE copies SET availability=? WHERE copy_id=?", (0, str(copy_id)))
+        conn.commit()
+        
         cursor.close()
         return
-    except:
+    except Exception as e:
+        print(e)
         cursor.close()
 
 
@@ -328,4 +325,22 @@ def show_inventory():
         cursor.close()
         return results
     except:
+        cursor.close()
+
+def show_user_copies(id):
+    '''
+        Returns all your copies
+    '''
+    conn = get_database_connection()
+    try:
+        cursor = conn.cursor()
+        cursor.execute("SELECT copy_id, book_name, author, isbn, genre, start_date, fees_due, book_price AS max_fee FROM copies NATURAL JOIN books NATURAL JOIN transactions WHERE copy_id IN (SELECT copy_id FROM transactions WHERE user_id=" + str(id) + ")")
+
+        results = cursor.fetchall()
+
+        conn.commit()
+        cursor.close()
+        return results
+    except Exception as e:
+        print(e)
         cursor.close()
