@@ -173,7 +173,7 @@ def copies():
     conn.commit()
     cursor.close()
     
-    return render_template("copies.html", value = data)
+    return render_template("copies.html", value = data, username=session['username'])
 
 
 if __name__ == '__main__':
