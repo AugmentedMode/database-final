@@ -88,3 +88,6 @@ class EditUserForm(FlaskForm):
   state = TextField('State*', [validators.Required("Please enter \
     your State")])
   submit = SubmitField('Save changes')
+
+class RefreshFeesForm(FlaskForm):
+  submit = SubmitField('Save changes')

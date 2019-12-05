@@ -1,5 +1,6 @@
 import os
 import hashlib
+from datetime import datetime, timedelta
 
 
 def get_database_connection():
@@ -222,7 +223,6 @@ def update_user_role(id):
         print(e)
         cursor.close()
 
-
 def add_transaction(username, isbn):
     '''
         Adds transaction to the database
@@ -267,4 +267,49 @@ def return_book(username, isbn, fee=0):
         return
     except:
         cursor.close()
+
+
+def all_transactions():
+    '''
+        Returns all transactions
+    '''
+    conn = get_database_connection()
+    try:
+        cursor = conn.cursor()
+        cursor.execute("SELECT transaction_id, copy_id, \
+        (SELECT username FROM users WHERE transactions.user_id = users.user_id) AS username, isbn, \
+        book_name, start_date, book_price, fees_due, returned FROM transactions NATURAL JOIN copies NATURAL JOIN books")
+
+        results = cursor.fetchall()
+
+        conn.commit()
+        cursor.close()
+        return results
+    except:
+        cursor.close()
+
+def refresh_fees():
+    '''
+        Increase all late fees by 5% of cost up to full cost
+    '''
+    conn = get_database_connection()
+    try:
+        
+        cursor = conn.cursor()
+        cursor.execute("SELECT transaction_id, start_date, fees_due, book_price \
+        FROM transactions NATURAL JOIN copies NATURAL JOIN books WHERE transactions.returned = 0")
+
+        row = cursor.fetchone()
+        five_percent = (0.05 * row[3])
+        while row is not None:
+            row_datetime = datetime.strptime(row[1], "%Y-%m-%d %H:%M:%S")
+            if datetime.now() - timedelta(days=5) > row_datetime <= datetime.now() and not row[2] > row[3]:
+                cursor.execute("UPDATE transactions SET fees_due = (fees_due + " + str(round((0.05 * row[3]), 2)) + ") WHERE transaction_id = '" + str(row[0]) + "'")
+                conn.commit()
+            row = cursor.fetchone()
+
+        conn.commit()
+        cursor.close()
+    except Exception as e:
+        print(e)
         cursor.close()
