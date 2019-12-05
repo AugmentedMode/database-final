@@ -1,0 +1,37 @@
+{% extends "index.html" %}
+
+{% block content %}
+
+<div class="container">
+    <h1>Inventory</h1>
+    <div class="container">
+        <table class="table" , id="transactions">
+            <thead>
+                <tr>
+                    <th scope="col">Copy ID</th>
+                    <th scope="col">Availability</th>
+                    <th scope="col">ISBN</th>
+                    <th scope="col">Book title</th>
+                    <th scope="col">Author</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Genre</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for copy in inventory %}
+                    <tr>
+                        <th scope="row">{{copy[0]}}</th>
+                            <td>{{copy[1]}}</td>
+                            <td>{{copy[2]}}</td>
+                            <td>{{copy[4]}}</td>
+                            <td>{{copy[6]}}</td>
+                            <td>{{copy[5]}}</td>
+                            <td>{{copy[7]}}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}
