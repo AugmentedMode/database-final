@@ -222,7 +222,6 @@ def update_user_role(id):
         print(e)
         cursor.close()
 
-
 def add_transaction(username, isbn):
     '''
         Adds transaction to the database
@@ -267,4 +266,24 @@ def return_book(username, isbn, fee=0):
         return
     except:
         cursor.close()
+        cursor.close()
+
+
+def all_transactions():
+    '''
+        Returns all transactions
+    '''
+    conn = get_database_connection()
+    try:
+        cursor = conn.cursor()
+        cursor.execute("SELECT transaction_id, copy_id, \
+        (SELECT username FROM users WHERE transactions.user_id = users.user_id) AS username, isbn, \
+        book_name, start_date, book_price, fees_due, returned FROM transactions NATURAL JOIN copies NATURAL JOIN books")
+
+        results = cursor.fetchall()
+
+        conn.commit()
+        cursor.close()
+        return results
+    except:
         cursor.close()

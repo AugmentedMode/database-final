@@ -9,7 +9,7 @@ from utils.forms import (
     LoginForm, SignUpForm,
 
     ChangeEmailForm, ChangePasswordForm,
-    AddBooksForm, AddTransactionForm, returnBooksForm, EditUserForm
+    AddBooksForm, AddTransactionForm, returnBooksForm, EditUserForm, RefreshFeesForm
 
 )
 
@@ -186,6 +186,12 @@ def return_books():
 
     return render_template('return_books.html', form=form, username=session['username'])
 
+@app.route("/transactions/",  methods=['GET', 'POST'])
+@login_required
+def transactions():
+    form = RefreshFeesForm()
+    trans_dict = functions.all_transactions()
+    return render_template('transactions.html', form=form, username=session['username'], transactions = trans_dict)
 
 if __name__ == '__main__':
     app.run(debug=True)
