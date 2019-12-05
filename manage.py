@@ -168,7 +168,8 @@ def copies():
     
     conn = functions.get_database_connection()
     cursor = conn.cursor()
-    cursor.execute("SELECT book_name, book_price, author, genre, copy_id, availability FROM books NATURAL JOIN copies")
+    
+    cursor.execute("SELECT * FROM transactions")
     data = cursor.fetchall()
     conn.commit()
     cursor.close()
